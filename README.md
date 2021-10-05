@@ -8,6 +8,7 @@ Consumo de APIs no React Native/Expo.
 - React Native
 - Expo
 - Axios
+- Styled Components
 
 ## Back-end:
 
