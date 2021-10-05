@@ -17,48 +17,31 @@ import styled from 'styled-components/native';
 
 interface Props {
   navigation;
+  route;
 }
 
-interface ResProps {
-  page: number;
-  results: MovieDTO[];
-}
-
-const HomeScreen = ({ navigation }: Props) => {
-  // const [page, setPage] = useState<number>(1);
-  // const [movies, setMovies] = useState<MovieDTO[]>();
+const HomeScreen = ({ navigation, route }: Props) => {
+  const { firstChar } = route.params || '';
 
   const handleNavigation = (movie: MovieDTO) => {
     navigation.navigate('MovieDetailsScreen', { movie });
   };
-
-  // useEffect(() => {
-  //   const fetchMovies = async () => {
-  //     try {
-  //       const res = await tmdbService.get<ResProps>('/trending/all/week');
-  //       setPage(res.data.page);
-  //       setMovies(res.data.results);
-  //     } catch (error) {
-  //       Alert.alert('Erro', error.message);
-  //       console.error(error);
-  //     }
-  //   };
-
-  //   fetchMovies();
-  // }, []);
 
   return (
     <Container>
       <StatusBar />
       <ScrollView style={{ flex: 1 }}>
         <Main>
-          {genres.map((genre) => (
-            <Carousel
-              key={genre.id}
-              genre={genre}
-              handleNavigation={handleNavigation}
-            />
-          ))}
+          {firstChar &&
+            genres
+              .filter((genre) => genre.name[0] === firstChar)
+              .map((genre) => (
+                <Carousel
+                  key={genre.id}
+                  genre={genre}
+                  handleNavigation={handleNavigation}
+                />
+              ))}
         </Main>
       </ScrollView>
     </Container>
