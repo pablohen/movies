@@ -3,12 +3,20 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from '../screens/HomeScreen';
 import MovieDetailsScreen from '../screens/MovieDetailsScreen';
 
-const AppStackRoutes = () => {
+const AppStackRoutes = ({ route }) => {
   const { Navigator, Screen } = createNativeStackNavigator();
+
   return (
-    <Navigator initialRouteName="HomeScreen">
-      <Screen name="HomeScreen" component={HomeScreen} />
+    <Navigator
+      screenOptions={{ headerShown: false }}
+      initialRouteName="HomeScreen"
+    >
       <Screen name="MovieDetailsScreen" component={MovieDetailsScreen} />
+      <Screen
+        name="HomeScreen"
+        component={HomeScreen}
+        initialParams={{ firstChar: route.params.firstChar }}
+      />
     </Navigator>
   );
 };
