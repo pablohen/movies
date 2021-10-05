@@ -1,12 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-  View,
-  Text,
-  Alert,
-  FlatList,
-  TouchableOpacity,
-  Image,
-} from 'react-native';
+import { Alert, FlatList, ActivityIndicator } from 'react-native';
 import { MovieDTO } from '../dtos/MovieDTO';
 import tmdbService from '../services/tmdbService';
 import styled from 'styled-components/native';
@@ -27,7 +20,7 @@ interface ResProps {
 
 const Carousel = ({ genre, handleNavigation }: Props) => {
   const [page, setPage] = useState<number>(1);
-  const [movies, setMovies] = useState<MovieDTO[]>();
+  const [movies, setMovies] = useState<MovieDTO[]>([]);
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -52,16 +45,20 @@ const Carousel = ({ genre, handleNavigation }: Props) => {
     <Container key={genre.id}>
       <Category>{genre.name}</Category>
 
-      <FlatList
-        data={movies}
-        keyExtractor={(item) => String(item.id)}
-        renderItem={({ item }) =>
-          item.poster_path && (
-            <CarouselItem item={item} handleNavigation={handleNavigation} />
-          )
-        }
-        horizontal={true}
-      />
+      {!!movies.length ? (
+        <FlatList
+          data={movies}
+          keyExtractor={(item) => String(item.id)}
+          renderItem={({ item }) =>
+            item.poster_path && (
+              <CarouselItem item={item} handleNavigation={handleNavigation} />
+            )
+          }
+          horizontal={true}
+        />
+      ) : (
+        <ActivityIndicator size="large" color="#fff" />
+      )}
     </Container>
   );
 };
@@ -73,6 +70,7 @@ const Category = styled.Text`
   font-size: 20px;
   font-weight: bold;
   margin-top: 12px;
+  margin-bottom: 4px;
 `;
 
 export default Carousel;
