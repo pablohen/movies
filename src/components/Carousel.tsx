@@ -10,6 +10,7 @@ import {
 import { MovieDTO } from '../dtos/MovieDTO';
 import tmdbService from '../services/tmdbService';
 import styled from 'styled-components/native';
+import CarouselItem from './CarouselItem';
 
 interface Props {
   genre: {
@@ -55,22 +56,8 @@ const Carousel = ({ genre, handleNavigation }: Props) => {
         data={movies}
         keyExtractor={(item) => String(item.id)}
         renderItem={({ item }) =>
-          item.title && (
-            <TouchableOpacity
-              onPress={() => handleNavigation(item)}
-              style={{ padding: 4, borderColor: 'black', borderWidth: 1 }}
-            >
-              <Image
-                source={{
-                  uri: `https://image.tmdb.org/t/p/original/${item.poster_path}`,
-                  width: 100,
-                  height: 150,
-                }}
-                style={{
-                  resizeMode: 'contain',
-                }}
-              />
-            </TouchableOpacity>
+          item.poster_path && (
+            <CarouselItem item={item} handleNavigation={handleNavigation} />
           )
         }
         horizontal={true}
@@ -79,9 +66,7 @@ const Carousel = ({ genre, handleNavigation }: Props) => {
   );
 };
 
-const Container = styled.View`
-  /* background-color: #111111; */
-`;
+const Container = styled.View``;
 
 const Category = styled.Text`
   color: #ffffff;
