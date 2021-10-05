@@ -6,6 +6,7 @@ Consumo de APIs no React Native/Expo.
 
 - TypeScript
 - React Native
+- React Navigation
 - Expo
 - Axios
 - Styled Components
