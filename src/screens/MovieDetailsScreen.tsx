@@ -1,7 +1,8 @@
 import React from 'react';
-import { View, Text, Image, StatusBar } from 'react-native';
+import { View, Text, Image, StatusBar, Alert, Dimensions } from 'react-native';
 import { MovieDTO } from '../dtos/MovieDTO';
 import styled from 'styled-components/native';
+import { Rating } from 'react-native-ratings';
 
 interface Props {
   navigation;
@@ -15,32 +16,46 @@ const MovieDetailsScreen = ({ navigation, route }: Props) => {
       <StatusBar />
       <View
         style={{
+          // flex: 1,
           width: '100%',
           flexDirection: 'row',
           justifyContent: 'space-between',
-          alignItems: 'flex-end',
+          alignItems: 'flex-start',
+          padding: 20,
         }}
       >
         <Image
           source={{
             uri: `https://image.tmdb.org/t/p/original/${movie.poster_path}`,
-            width: 100,
-            height: 200,
+            width: Dimensions.get('screen').width / 2.25,
+            height: Dimensions.get('screen').height / 2,
           }}
           style={{
             resizeMode: 'contain',
           }}
         />
 
-        <Text style={{ color: '#ffffff' }}>
-          Lançamento: {new Date(movie.release_date).toLocaleDateString()}
-        </Text>
+        <View
+          style={{
+            flex: 1,
+            paddingHorizontal: 10,
+          }}
+        >
+          <Title>{movie.title}</Title>
+          <Text style={{ color: '#ffffff' }}>
+            Lançamento em {new Date(movie.release_date).toLocaleDateString()}
+          </Text>
+          <Rating
+            type="custom"
+            imageSize={30}
+            startingValue={movie.vote_average / 2}
+            tintColor="#111111"
+          />
+        </View>
       </View>
 
       <Content>
-        <Title>{movie.title}</Title>
-        <Text>{movie.popularity}</Text>
-        <Text>Resumo: {movie.overview}</Text>
+        <Overview>{movie.overview}</Overview>
       </Content>
     </Container>
   );
@@ -60,4 +75,10 @@ const Content = styled.View`
 const Title = styled.Text`
   font-size: 24px;
   color: white;
+  margin-top: 20px;
+`;
+
+const Overview = styled.Text`
+  font-size: 18px;
+  color: #ffffffaa;
 `;

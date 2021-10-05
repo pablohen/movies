@@ -13,6 +13,7 @@ import tmdbService from '../services/tmdbService';
 import { MovieDTO } from '../dtos/MovieDTO';
 import genres from './../utils/moviesGenres';
 import Carousel from '../components/Carousel';
+import styled from 'styled-components/native';
 
 interface Props {
   navigation;
@@ -24,55 +25,53 @@ interface ResProps {
 }
 
 const HomeScreen = ({ navigation }: Props) => {
-  const [page, setPage] = useState<number>(1);
-  const [movies, setMovies] = useState<MovieDTO[]>();
+  // const [page, setPage] = useState<number>(1);
+  // const [movies, setMovies] = useState<MovieDTO[]>();
 
   const handleNavigation = (movie: MovieDTO) => {
     navigation.navigate('MovieDetailsScreen', { movie });
   };
 
-  useEffect(() => {
-    const fetchMovies = async () => {
-      try {
-        const res = await tmdbService.get<ResProps>('/trending/all/week');
-        setPage(res.data.page);
-        setMovies(res.data.results);
-      } catch (error) {
-        Alert.alert('Erro', error.message);
-        console.error(error);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchMovies = async () => {
+  //     try {
+  //       const res = await tmdbService.get<ResProps>('/trending/all/week');
+  //       setPage(res.data.page);
+  //       setMovies(res.data.results);
+  //     } catch (error) {
+  //       Alert.alert('Erro', error.message);
+  //       console.error(error);
+  //     }
+  //   };
 
-    fetchMovies();
-  }, []);
+  //   fetchMovies();
+  // }, []);
 
   return (
-    <ScrollView style={{ flex: 1 }}>
+    <Container>
       <StatusBar />
-
-      <View style={{ padding: 12, backgroundColor: '#111111' }}>
-        {/* {genres.map((genre) => (
-          <Carousel
-            key={genre.id}
-            genre={genre}
-            handleNavigation={handleNavigation}
-          />
-          ))} */}
-
-        <FlatList
-          data={genres}
-          keyExtractor={(item) => String(item.id)}
-          renderItem={({ item }) => (
+      <ScrollView style={{ flex: 1 }}>
+        <Main>
+          {genres.map((genre) => (
             <Carousel
-              key={item.id}
-              genre={item}
+              key={genre.id}
+              genre={genre}
               handleNavigation={handleNavigation}
             />
-          )}
-        />
-      </View>
-    </ScrollView>
+          ))}
+        </Main>
+      </ScrollView>
+    </Container>
   );
 };
+
+const Container = styled.View`
+  flex: 1;
+  background-color: #111111;
+`;
+
+const Main = styled.View`
+  padding: 12px;
+`;
 
 export default HomeScreen;
