@@ -11,7 +11,7 @@ Consumo de APIs no React Native/Expo.
 
 ## Back-end:
 
-- TMDB v3: [IBGE](https://developers.themoviedb.org/3)
+- [TMDB v3](https://developers.themoviedb.org/3)
 
 ### Como usar:
 - Instalar o Expo: 'npm i -g expo-cli'
