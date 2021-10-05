@@ -16,4 +16,4 @@ Consumo de APIs no React Native/Expo.
 ### Como usar:
 - Instalar o Expo: 'npm i -g expo-cli'
 - Instalar as dependências: 'npm i'
-- Executar o Expo com 'expo start'
+- Executar o Expo: 'expo start'
